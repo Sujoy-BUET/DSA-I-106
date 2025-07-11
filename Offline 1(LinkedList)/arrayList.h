@@ -20,6 +20,7 @@ void init(arrayList* list)
 void free_list(arrayList* list)
 {
     free(list->array);
+    list->array = NULL;
 }
 
 void increase_capacity(arrayList* list)
@@ -105,7 +106,6 @@ int size(arrayList* list)
 
 void prev(int n, arrayList* list)
 {
-    // implement prev function
     while(n--){ 
         if(list->curr_pos==-1) return;
         list->curr_pos--;
