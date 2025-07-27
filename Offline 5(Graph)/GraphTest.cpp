@@ -7,8 +7,6 @@
 #include "AdjacencyMatrixGraph.h"
 
 
-
-
 // Toggle between implementations
 #define USE_ADJACENCY_LIST
 //#define USE_ADJACENCY_MATRIX

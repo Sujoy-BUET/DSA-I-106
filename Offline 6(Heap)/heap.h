@@ -39,6 +39,7 @@ public:
     Heap(const vector<int>& numbers) : v(numbers) {
         this->max_size = numbers.size();
         this->current_size = numbers.size();
+        build_max_heap();
     }
     void build_max_heap(){
         for(int i = (current_size / 2) - 1; i >= 0; i--){
@@ -82,7 +83,7 @@ public:
 
 void heapsort(vector<int> & numbers){
     Heap temp(numbers);
-    temp.build_max_heap();
+    //temp.build_max_heap();
     int n = numbers.size();
     for(int i=0;i<n-1;i++){
         swap(temp.v[0],temp.v[temp.current_size-1]);

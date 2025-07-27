@@ -64,6 +64,7 @@ private:
             cout << "(" << t->key << ':' << t->value << ") ";
             print_inorder(t->right);
         }
+        
     }
     
     void print_default(Node *t)const{
@@ -83,12 +84,31 @@ private:
             print_preorder(t->right);
         }
     }
+    
+    // wrong implementation of print_levelorder(). this will work only for complete tree
+    void to_array(Node *t,int arrKey[],int arrVal[],int i,int n) const{
+        if(t!=nullptr && i<n){
+            arrKey[i] = t->key;
+            arrVal[i] = t->value;
+            to_array(t->left,arrKey,arrVal,2*i+1,n);
+            to_array(t->right,arrKey,arrVal,2*i+2,n);
+        }
+    }
+    void print_levelorder(Node *t)const{
+        int arrKey[node_count],arrVal[node_count];
+        to_array(t,arrKey,arrVal,0,node_count);
+        for(int i=0;i<node_count;i++){
+            cout << "(" << arrKey[i] << ':' << arrVal[i] << ") ";
+        }
+    }
     void print_postorder(Node *t)const{
+        
         if(t!=nullptr){
             print_postorder(t->left);
             print_postorder(t->right);
             cout << "(" << t->key << ':' << t->value << ") ";    
         }
+        
     }
     void transplant(Node *a,Node *b){
         if(a==root){
@@ -109,8 +129,8 @@ private:
         if(t!=nullptr){
             private_clear(t->left);
             private_clear(t->right);
-            delete t;
         }
+        delete t;
     }
     // End your private helper functions here
 
@@ -170,6 +190,7 @@ public:
             if(s!=t->right){
                 transplant(s,s->right);
                 s->right = t->right;
+
             }
             transplant(t,s);
             s->left = t->left; 
@@ -262,13 +283,6 @@ public:
         }
         return t->key;
     }
-    int height(){
-        return height(root);
-    }
-    int height(Node *t){
-        if(t==nullptr) return -1;
-        return max(height(t->left),height(t->right))+1;
-    }
 
     /**
      * Print the BST using specified traversal method
@@ -277,7 +291,7 @@ public:
         // TODO: Implement print logic
         if(traversal_type=='D' || traversal_type=='d'){
             cout << "BST (Default):";
-            print_default(root);
+            print_levelorder(root);
             cout << '\n';
         }else if(traversal_type=='I' || traversal_type=='i'){
             cout << "BST (In-order): ";
@@ -291,6 +305,9 @@ public:
             cout << "BST (Post-order): ";
             print_postorder(root);
             cout << '\n';
+        }else if(traversal_type=='L'){
+            cout << "BST(Level-order): ";
+            print_levelorder(root);
         }
     }
 };

@@ -4,7 +4,6 @@
 #include "GraphADT.h"
 #include "queue.h"
 
-
 class AdjacencyMatrixGraph : public GraphADT
 {
 private:
@@ -29,6 +28,7 @@ private:
         matrix = matrix2;
         sz = v;
     }
+
     bool dfsCheckPath(int u, int v, bool visited[]) const {
         if(u==v) return true;
         visited[u] = true;
@@ -46,14 +46,15 @@ public:
         matrix[0] = new int[2]();
         matrix[1] = new int[2]();
         sz = 1;
-        //matrix[1][1] = 0;
     }
+
     ~AdjacencyMatrixGraph() {
         for(int i=0; i<=sz; i++) {
             delete[] matrix[i];
         }
         delete[] matrix;
     }
+
     void AddNode(int v) override
     {
         //TODO: Add a new node v and resize the matrix if your current matrix is almost going to be full.
@@ -153,7 +154,7 @@ public:
     int FindShortestPathLength(int u, int v) const override
     {
         //TODO: Return the shortest path length between nodes u and v if any such path exists. Otherwise return -1.
-        if(u > sz || v > sz) return -1;
+        if(u > sz || v > sz) return -1; 
         if(u == v) return 0; 
         ListQueue q;
         q.enqueue(u);
@@ -182,6 +183,7 @@ public:
         }
         return -1;
     }
+
     linkedList GetNeighbors(int u) const override
     {
         //TODO return a list of neighbors of node u
@@ -192,7 +194,6 @@ public:
         }
         return list;
     }
-
 };
 
 #endif // ADJACENCY_MATRIX_GRAPH_H

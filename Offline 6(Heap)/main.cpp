@@ -24,9 +24,9 @@ int main()
         pq.push(numbers[i]);
 
     cout << "Inserting " << pq.size() << " numbers in priority queue takes "<< float(clock() - time_of_insertion_in_pq) / CLOCKS_PER_SEC << " seconds\n";
-
-    Heap h(numbers.size());// Passing the maximum size of the heap as parameter to constructor. You need to implement this.
-    //Heap h(numbers); // You need to implement this constructor too and construct the heap from the provided vector
+    
+    //Heap h(numbers.size());// Passing the maximum size of the heap as parameter to constructor. You need to implement this.
+    Heap h(numbers); // You need to implement this constructor too and construct the heap from the provided vector
 
     clock_t time_of_insertion_in_my_heap = clock();
 

@@ -28,7 +28,7 @@ int main(int argc, char **argv) {
         // After every insertion and removal, print the BST in nested parentheses format
         // Handle exceptions where necessary and print appropriate error messages
 
-        // Start your code here 
+        // Start your code here
         
         if(c=='I'){
             int key;

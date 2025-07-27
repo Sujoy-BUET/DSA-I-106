@@ -58,7 +58,6 @@ public:
     void AddNode(int v) override{
         //TODO: Add a new node v and resize the matrix if your current matrix is almost going to be full.
         if(v > capacity) resize(v);
-        //init(&arr[v]);
         if(v > size) size = v;
     }
 
@@ -110,7 +109,7 @@ public:
     void FindShortestPath(int u, int v) const override{
         //TODO: Find the shortest path between the nodes u and v and print it.
         if(u==v){
-            printf("%d\n", u);
+            printf("Shortest path from %d to %d: %d\n",u,v,u);
             return;
         }
         ListQueue queue;
@@ -155,7 +154,6 @@ public:
             printf("%d ", path[i]);
         }
         printf("\n");
-
     }
 
     int FindShortestPathLength(int u, int v) const override
@@ -188,6 +186,61 @@ public:
         return arr[u];
     }
 
+    bool isBFSCycle(){
+        //TODO: Find the shortest path between the nodes u and v and print it.
+        ListQueue queue;
+        queue.enqueue(arr[1].head->element);
+        bool visited[size+1];
+        int parent[size+1];
+        for(int i=0;i<=size;i++){
+            visited[i] = false;
+            parent[i] = -1;
+        }
+        visited[arr[1].head->element] = true;
+        bool found = false;
+        while(!queue.empty()){  
+            int x = queue.dequeue();
+            node *curr = arr[x].head;
+            while(curr!=NULL){
+                int neighbor = curr->element;
+                if(!visited[neighbor]){
+                    queue.enqueue(neighbor);
+                    visited[neighbor] = true;
+                    parent[neighbor] = x;
+                }else{
+                    if(parent[x]!=neighbor) return true;
+                }
+                curr = curr->next;
+            }
+        }
+        return false;
+    }
+
+    bool isDFSCycleUtil(int u,int par,bool visited[]){
+        visited[u] = true;
+        node *curr = arr[u].head;
+        while(curr!=NULL){
+            int x = curr->element; 
+            if(!visited[x]){ 
+                if(isDFSCycleUtil(x,u,visited))
+                    return true;
+            }else if(x!=par){
+                return true;
+            }
+            curr = curr->next;
+        }
+        return false;
+    }
+
+    bool isDFSCycle(){
+        bool visited[size+1]={0};
+        for(int i=1;i<=size;i++){
+            if(!visited[i]){
+                if(isDFSCycleUtil(arr[1].head->element,-1,visited)) return true;
+            }
+        }  
+        return false;
+    }
 };
 #endif  //ADJACENCY_LIST_GRAPH_H
 
